@@ -11,6 +11,8 @@ namespace ServiceLocatorSystem
             ServiceLocator.Register<SquareGrid>();
             ServiceLocator.RegisterMono<Pool>();
             ServiceLocator.RegisterMono<SelectionManager>();
+            ServiceLocator.RegisterMono<MatchManager>();
+            ServiceLocator.Register<SquareCellMatch>();
             ServiceLocator.Register<CellSelectionResponse>();
         }
     }
