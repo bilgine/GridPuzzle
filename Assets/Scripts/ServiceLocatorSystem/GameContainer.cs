@@ -6,6 +6,7 @@ namespace ServiceLocatorSystem
 
         protected override void Install()
         {
+            ServiceLocator.RegisterMono<CameraController>();
             ServiceLocator.RegisterMono<GridGenerator>();
             ServiceLocator.Register<SquareGrid>();
             ServiceLocator.RegisterMono<Pool>();
