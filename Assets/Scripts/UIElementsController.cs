@@ -1,23 +1,24 @@
 using System;
-using ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class UIElementsController: MonoBehaviour
+public class UIElementsController : MonoBehaviour
 {
     [SerializeField] private Button startButton;
     [SerializeField] private InputField inputField;
     private SquareGrid _squareGridGenerator;
 
-    private void Start()
+
+    [Inject]
+    public void Construct(SquareGrid squareGrid)
     {
-        GetSquareGridContainer();
-        startButton.onClick.AddListener(OnStartButtonClick);
+        _squareGridGenerator = squareGrid;
     }
 
-    private void GetSquareGridContainer()
+    private void Start()
     {
-        _squareGridGenerator = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<SquareGrid>();
+        startButton.onClick.AddListener(OnStartButtonClick);
     }
 
     private void OnStartButtonClick()

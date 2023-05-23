@@ -1,28 +1,22 @@
-using ServiceLocatorSystem;
 using UnityEngine;
+using Zenject;
 
-public class SelectionManager :MonoBehaviour, IService
+public class SelectionManager : ITickable
 {
     private ISelectionResponse _selectionResponse;
 
-    public void OnRegisterComplete()
+
+    [Inject]
+    public void Construct(CellSelectionResponse selection)
     {
+        _selectionResponse = selection;
     }
 
-    public void OnContainerStart()
-    {
-        _selectionResponse = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<CellSelectionResponse>();
-    }
 
-    private void Update()
+    public void Tick()
     {
         if (!Input.GetMouseButtonDown(0)) return;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit))
-        {
-            _selectionResponse.OnHitObject(hit);
-        }
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hit)) _selectionResponse.OnHitObject(hit);
     }
-}    
-
-
+}

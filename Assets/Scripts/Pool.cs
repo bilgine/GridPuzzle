@@ -1,12 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class Pool: MonoBehaviour, IPool
+public class Pool: IPool , IInitializable
 {
-    [SerializeField] Cell cellPrefab;
+    private Cell.Factory _cellFactory;
     private Queue<Cell> _inactiveItems;
-
-    private void Awake()
+    
+    [Inject]
+    public void Construct(Cell.Factory cell)
+    {
+        _cellFactory = cell;
+    }
+    
+    public void Initialize()
     {
         _inactiveItems = new Queue<Cell>();
     }
@@ -25,7 +32,10 @@ public class Pool: MonoBehaviour, IPool
         }
         else
         {
-            Cell obj = Instantiate(cellPrefab, position, rotation, parent);
+            Cell obj = _cellFactory.Create();
+            obj.transform.position = position;
+            obj.transform.rotation = rotation;
+            obj.transform.SetParent(parent);
             obj.InitializeCell();
             return obj;
         }
@@ -39,4 +49,6 @@ public class Pool: MonoBehaviour, IPool
         obj.SetCellDefault();
         _inactiveItems.Enqueue(obj);
     }
+
+    
 }

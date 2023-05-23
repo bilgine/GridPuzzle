@@ -1,7 +1,7 @@
-using ServiceLocatorSystem;
 using UnityEngine;
+using Zenject;
 
-public class SquareGrid: IGrid
+public class SquareGrid: IGrid , IInitializable
 {
     private int _size = 10;
     private const float GridSpaceSize = .75f;
@@ -12,9 +12,16 @@ public class SquareGrid: IGrid
     public OnGridGenerate GridGenerated;
     
     
-    public void GridGenerate(Transform parent = null)
+    [Inject]
+    public void Construct(Pool cellPool)
     {
-        _cellPool = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<Pool>();
+        Debug.Log("SquareGrid Construct");
+        _cellPool = cellPool;
+    }
+    
+    
+    public void GridGenerate()
+    {
         _squares = new Cell[_size, _size];
         InstantiateGrid();
         AssignSquareGridNeighbors(_squares);
@@ -64,5 +71,7 @@ public class SquareGrid: IGrid
     }
 
 
-    
+    public void Initialize()
+    {
+    }
 }    

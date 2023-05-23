@@ -6,14 +6,14 @@ namespace ServiceLocatorSystem
 
         protected override void Install()
         {
-            ServiceLocator.RegisterMono<CameraController>();
+            /*ServiceLocator.RegisterMono<CameraController>();
             ServiceLocator.RegisterMono<GridGenerator>();
             ServiceLocator.Register<SquareGrid>();
             ServiceLocator.RegisterMono<Pool>();
             ServiceLocator.RegisterMono<SelectionManager>();
             ServiceLocator.RegisterMono<MatchManager>();
             ServiceLocator.Register<SquareCellMatch>();
-            ServiceLocator.Register<CellSelectionResponse>();
+            ServiceLocator.Register<CellSelectionResponse>();*/
         }
     }
 }

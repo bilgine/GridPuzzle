@@ -1,21 +1,15 @@
-using System;
-using ServiceLocatorSystem;
-using UnityEngine;
+using Zenject;
 
-public class MatchManager: MonoBehaviour, IService
+public class MatchManager : IInitializable
 {
     private CellSelectionResponse _selectionManager;
     private ICellMatch _cellMatch;
 
-    public void OnRegisterComplete()
+    [Inject]
+    public void Construct(CellSelectionResponse cellSelection, SquareCellMatch cellMatch)
     {
-    }
-
-    public void OnContainerStart()
-    {
-        _cellMatch = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<SquareCellMatch>();
-        _selectionManager = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<CellSelectionResponse>();
-        _selectionManager.Clicked += CheckMatch;
+        _selectionManager = cellSelection;
+        _cellMatch = cellMatch;
     }
 
     private void CheckMatch(Cell cell)
@@ -24,8 +18,8 @@ public class MatchManager: MonoBehaviour, IService
         _cellMatch.MatchControl(cell);
     }
 
-    private void OnDestroy()
+    public void Initialize()
     {
-        _selectionManager.Clicked -= CheckMatch;
+        _selectionManager.Clicked += CheckMatch;
     }
-}    
+}

@@ -3,11 +3,12 @@ using UnityEngine;
 public class SquareCell : Cell
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-        
+
     public override void InitializeCell()
     {
-        gameObject.SetActive(true); 
+        gameObject.SetActive(true);
     }
+
     public override void OpenCell()
     {
         if (isOpened) return;
@@ -18,8 +19,9 @@ public class SquareCell : Cell
     public override void CloseCell()
     {
         spriteRenderer.color = Color.white;
-        isOpened = false;  
+        isOpened = false;
     }
+
     public override void SetCellDefault()
     {
         gameObject.SetActive(false);
@@ -27,4 +29,3 @@ public class SquareCell : Cell
         isOpened = false;
     }
 }
-    

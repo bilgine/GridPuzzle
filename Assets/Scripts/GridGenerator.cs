@@ -1,19 +1,17 @@
-using ServiceLocatorSystem;
-using UnityEngine;
+using Zenject;
 
-public class GridGenerator : MonoBehaviour,IService
+public class GridGenerator : IInitializable
 {
-     private IGrid _grid;
-     
-     public void OnRegisterComplete()
-     {
-     }
+    private IGrid _grid;
 
-     public void OnContainerStart()
-     {
-          _grid = ContainerManager.GetContainer(Container.Game).ServiceLocator.Resolve<SquareGrid>();
-          _grid.GridGenerate(transform);
-     }
+    public void Initialize()
+    {
+        _grid.GridGenerate();
+    }
+
+    [Inject]
+    public void Construct(SquareGrid grid)
+    {
+        _grid = grid;
+    }
 }
-
-
